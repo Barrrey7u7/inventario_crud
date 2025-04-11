@@ -54,11 +54,13 @@
             background-color: #f2f2f2;
         }
         .action-btn {
-            background-color: #f0ad4e;
             color: white;
             padding: 5px 10px;
             border-radius: 3px;
             text-decoration: none;
+        }
+        .edit-btn {
+            background-color: #f0ad4e;
         }
         .delete-btn {
             background-color: #d9534f;
@@ -67,26 +69,25 @@
 </head>
 <body>
     <header>
-
-        <i class="fas fa-trophy icon"></i> <!-- Trofeo -->
+        <i class="fas fa-trophy icon"></i>
         <i class="fas fa-gamepad icon"></i>
         <h1>Gestión de Stock</h1>
-        <i class="fas fa-trophy icon"></i> <!-- Trofeo -->
+        <i class="fas fa-trophy icon"></i>
         <i class="fas fa-gamepad icon"></i>
-
     </header>
+
     <div class="container">
-        <a href="{{ url_for('create_estudiante') }}" class="btn btn-success mb-3">Añadir articulo</a>
-        
+        <a href="{{ url_for('create_estudiante') }}" class="btn">Añadir artículo</a>
+
         <table>
             <thead>
                 <tr>
-                    <th>No. Articulo</th>
-                    <th>Titulo</th>
+                    <th>No. Artículo</th>
+                    <th>Título</th>
                     <th>Plataforma</th>
                     <th>Piezas</th>
                     <th>Precio</th>
-                    <th>Button</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -98,9 +99,9 @@
                     <td>{{ alumno.ap_materno }}</td>
                     <td>{{ alumno.semestre }}</td>
                     <td>
-                        <a href="{{ url_for('update_estudiante', no_control=estudiante.no_control) }}" class="btn btn-warning">Editar</a>
-                        <a href="{{ url_for('delete_estudiante', no_control=estudiante.no_control) }}" class="btn btn-danger">Eliminar</a>
-
+                        <a href="{{ url_for('update_estudiante', no_control=alumno.no_control) }}" class="action-btn edit-btn">Editar</a>
+                        <a href="{{ url_for('delete_estudiante', no_control=alumno.no_control) }}" class="action-btn delete-btn">Eliminar</a>
+                    
                     </td>
                 </tr>
                 {% endfor %}
