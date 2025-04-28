@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Articulo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Nuevo Articulo</h2>
+        <form method="POST">
+            <div class="form-group">
+                <label for="no_control">No. Articulo</label>
+                <input type="text" id="no_control" name="no_control" required>
+            </div>
+            <div class="form-group">
+                <label for="nombre">Titulo</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+            <div class="form-group">
+                <label for="ap_paterno">Plataforma</label>
+                <input type="text" id="ap_paterno" name="ap_paterno" required>
+            </div>
+            <div class="form-group">
+                <label for="ap_materno">Piezas</label>
+                <input type="text" id="ap_materno" name="ap_materno" required>
+            </div>
+            <div class="form-group">
+                <label for="semestre">Precio</label>
+                <input type="number" id="semestre" name="semestre" required>
+            </div>
+            <button type="submit">Guardar</button>
+        </form>
+        <a href="{{ url_for('index') }}" class="back-btn">Volver a la lista</a>
+    </div>
+</body>
+</html>
+
