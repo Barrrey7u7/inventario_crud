@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Shop</title>
+    <title>Stock</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
@@ -99,7 +99,8 @@
                     <td>{{ alumno.ap_materno }}</td>
                     <td>{{ alumno.semestre }}</td>
                     <td>
-                        
+                        <a href="{{ url_for('update_estudiante', no_control=alumno.no_control) }}" class="action-btn edit-btn">Editar</a>
+                        <a href="{{ url_for('delete_estudiante', no_control=alumno.no_control) }}" class="action-btn delete-btn">Eliminar</a>
                     </td>
                 </tr>
                 {% endfor %}
