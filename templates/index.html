@@ -77,7 +77,7 @@
  </header>
 
     <div class="container">
-        
+        <a href="{{ url_for('create_estudiante') }}" class="btn">Añadir artículo</a>
 
         <table>
             <thead>
@@ -99,6 +99,7 @@
                     <td>{{ alumno.ap_materno }}</td>
                     <td>{{ alumno.semestre }}</td>
                     <td>
+                        
                     </td>
                 </tr>
                 {% endfor %}
