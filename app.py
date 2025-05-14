@@ -78,3 +78,6 @@ def delete_estudiante(no_control):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+with app.app_context():
+    db.create_all()
