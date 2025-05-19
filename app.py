@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import os
+
 app = Flask(__name__)
 
 # Configuración de la base de datos
@@ -28,15 +29,17 @@ class Estudiante(db.Model):
             'semestre': self.semestre
         }
 
+# Crear tablas si no existen
+with app.app_context():
+    db.create_all()
+
 # Rutas con vistas
 
-# Mostrar todos los alumnos
 @app.route('/')
 def index():
     alumnos = Estudiante.query.all()
     return render_template('index.html', alumnos=alumnos)
 
-# Crear un nuevo estudiante (formulario)
 @app.route('/alumnos/new', methods=['GET', 'POST'])
 def create_estudiante():
     if request.method == 'POST':
@@ -46,14 +49,19 @@ def create_estudiante():
         ap_materno = request.form['ap_materno']
         semestre = int(request.form['semestre'])
 
-        nuevo_estudiante = Estudiante(no_control=no_control, nombre=nombre, ap_paterno=ap_paterno, ap_materno=ap_materno, semestre=semestre)
+        nuevo_estudiante = Estudiante(
+            no_control=no_control,
+            nombre=nombre,
+            ap_paterno=ap_paterno,
+            ap_materno=ap_materno,
+            semestre=semestre
+        )
         db.session.add(nuevo_estudiante)
         db.session.commit()
 
         return redirect(url_for('index'))
     return render_template('create_estudiante.html')
 
-# Actualizar un estudiante (formulario)
 @app.route('/alumnos/update/<string:no_control>', methods=['GET', 'POST'])
 def update_estudiante(no_control):
     estudiante = Estudiante.query.get(no_control)
@@ -62,12 +70,11 @@ def update_estudiante(no_control):
         estudiante.ap_paterno = request.form['ap_paterno']
         estudiante.ap_materno = request.form['ap_materno']
         estudiante.semestre = int(request.form['semestre'])
-        
+
         db.session.commit()
         return redirect(url_for('index'))
     return render_template('update_estudiante.html', estudiante=estudiante)
 
-# Eliminar un estudiante
 @app.route('/alumnos/delete/<string:no_control>')
 def delete_estudiante(no_control):
     estudiante = Estudiante.query.get(no_control)
@@ -75,8 +82,3 @@ def delete_estudiante(no_control):
         db.session.delete(estudiante)
         db.session.commit()
     return redirect(url_for('index'))
-
-if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-    app.run(debug=True)
