@@ -15,5 +15,5 @@ COPY . .
 EXPOSE 5008
 
 # Comando para ejecutar la aplicación con Gunicorn
-CMD python init_db.py && gunicorn -w 4 -b 0.0.0.0:5008 app:app
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5008", "app:app"]
 
