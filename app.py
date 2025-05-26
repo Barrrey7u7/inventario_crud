@@ -13,7 +13,7 @@ db = SQLAlchemy(app)
 # Modelo de la base de datos
 class Estudiante(db.Model):
     __tablename__ = 'alumnos'
-    __table_args__ = {'schema': 'public'}  # Especifica el esquema
+    __table_args__ = {'schema': 'public'}  # Esquema explícito
     no_control = db.Column(db.String, primary_key=True)
     nombre = db.Column(db.String)
     ap_paterno = db.Column(db.String)
@@ -80,4 +80,6 @@ def delete_estudiante(no_control):
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    with app.app_context():
+        db.create_all()
+    app.run(debug=True, host='0.0.0.0')
