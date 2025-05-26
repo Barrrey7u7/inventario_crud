@@ -1,10 +1,11 @@
 from flask import Flask, request, jsonify, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
+import os
 
 app = Flask(__name__)
 
-# Configuración de la base de datos
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://bd_crud_q9e1_user:umbXJau054SDayrxsLFlgrcwGWolL58c@dpg-d0h7o1uuk2gs73f5dlt0-a.oregon-postgres.render.com/bd_crud_q9e1'
+# Configuración de la base de datos usando variable de entorno
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -30,13 +31,11 @@ class Estudiante(db.Model):
 
 # Rutas con vistas
 
-# Mostrar todos los alumnos
 @app.route('/')
 def index():
     alumnos = Estudiante.query.all()
     return render_template('index.html', alumnos=alumnos)
 
-# Crear un nuevo estudiante (formulario)
 @app.route('/alumnos/new', methods=['GET', 'POST'])
 def create_estudiante():
     if request.method == 'POST':
@@ -46,14 +45,19 @@ def create_estudiante():
         ap_materno = request.form['ap_materno']
         semestre = int(request.form['semestre'])
 
-        nuevo_estudiante = Estudiante(no_control=no_control, nombre=nombre, ap_paterno=ap_paterno, ap_materno=ap_materno, semestre=semestre)
+        nuevo_estudiante = Estudiante(
+            no_control=no_control,
+            nombre=nombre,
+            ap_paterno=ap_paterno,
+            ap_materno=ap_materno,
+            semestre=semestre
+        )
         db.session.add(nuevo_estudiante)
         db.session.commit()
 
         return redirect(url_for('index'))
     return render_template('create_estudiante.html')
 
-# Actualizar un estudiante (formulario)
 @app.route('/alumnos/update/<string:no_control>', methods=['GET', 'POST'])
 def update_estudiante(no_control):
     estudiante = Estudiante.query.get(no_control)
@@ -67,7 +71,6 @@ def update_estudiante(no_control):
         return redirect(url_for('index'))
     return render_template('update_estudiante.html', estudiante=estudiante)
 
-# Eliminar un estudiante
 @app.route('/alumnos/delete/<string:no_control>')
 def delete_estudiante(no_control):
     estudiante = Estudiante.query.get(no_control)
@@ -78,4 +81,3 @@ def delete_estudiante(no_control):
 
 if __name__ == '__main__':
     app.run(debug=True)
-    
